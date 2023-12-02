@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Jenny's Amazing Web App</title>
+    <!-- Font Awesome icons (free version)-->
+    <script
+      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Google fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="index.html">Jenny's Web App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ms-auto py-4 py-lg-0">
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link px-lg-3 py-3 py-lg-4" href="/contact"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('/static/img/detail-bg.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="site-heading">
+              <h1>Detailed info...</h1>
+              <span class="subheading"
+                >Here is the detailed information about the location!</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <!-- name and address -->
+          <h1>{{ details.name }}</h1>
+          <p>
+            <span style="background-color: aqua">Address</span>: {{
+            details.address }}
+          </p>
+          <p>
+            <span style="background-color: aqua">Category</span>: {{ details.details["category_name"] }}
+            {% for subcategory in details.details["subcategory_name"] %}
+              ({{ subcategory }})
+            {% endfor %}
+          </p>
+
+          <!-- contact info -->
+          <h2>Contact Information</h2>
+          <p>
+            <span style="background-color: aqua">Email</span>: {% if details.details["email"] %}
+            {{ details.details["email"] }}
+            {% else %}
+            N/A
+            {% endif %}
+          </p>
+          <p>
+            <span style="background-color: aqua">Phone</span>: {% if details.details["phone"] %}
+            {{ details.details["phone"] }}
+            {% else %}
+            N/A 
+            {% endif %}
+          </p>
+          <p>
+            <span style="background-color: aqua">Website</span>: {% if details.details["website"] %}
+            <a href="{{ details.details['website'] }}">
+              {{ details.details["website"] }}
+            </a>
+            {% else %}
+            N/A 
+            {% endif %}
+          </p>
+
+          <!-- details -->
+          <h2>Details</h2>
+          <p>
+            <span style="background-color: aqua">Description</span>:  {% if details.details["description"] %}
+            {{ details.details["description"] }}
+            {% else %}
+            N/A
+            {% endif %}
+          </p>
+          <p>
+            <span style="background-color: aqua">Rating</span>: {% if details.details["rating"] %}
+            {{ details.details["rating"] }}
+            {% else %}
+            N/A
+            {% endif %}
+          </p>
+          <p>
+            <span style="background-color: aqua">Ranking</span>: {% if details.details["ranking_string"] %} 
+            {{details.details["ranking_string"] }}
+            {% else %}
+            N/A 
+            {% endif %}
+          </p>
+          <p>
+            <span style="background-color: aqua">Opening hours</span>: 
+            <ul>
+            {% if details.details["weekday_text"] %}
+              <ul>
+                {% for hours in details.details["weekday_text"] %}
+                  <li>{{ hours }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+            Opening hours not available.
+            {% endif %}
+            </ul>
+          </p>
+          <a href="{{ details.details['explore'] }}" class="tripadvisor-button"
+            >Explore more on TripAdvisor...</a
+          >
+          <br>
+          <br>
+          <!-- awards -->
+          <h2>Awards</h2>
+          {% if details.details["awards"] %}
+          <ul>
+            {% for award in details.details["awards"] %}
+            <li>
+              <strong>Award Type:</strong> {{ award.award_type }} <br>
+              <strong>Year:</strong> {{ award.year }} <br>
+              <strong>Name:</strong> {{ award.display_name }} <br>
+              <img src="{{ award.images.large }}" alt="Award Image" class="award-image" /> 
+            </li>
+            {% endfor %}
+            {% else %}
+            N/A 
+            {% endif %}
+          </ul>
+          <br>
+          <br>
+      
+          <!-- reviews -->
+          <h2>Reviews</h2>
+          <ul>
+            {% for review in details.reviews %}
+            <li>
+              <strong>Travel Date:</strong> {{ review.travel_date }}<br />
+              <strong>Rating:</strong> {{ review.ratings }}<br />
+              <strong>Title:</strong> {{ review.review_title }}<br />
+              <strong>Review:</strong> {{ review.review_text }}<br />
+              <strong>Trip Type:</strong> {{ review.trip_type }}<br />
+            </li>
+            <br>
+            {% endfor %}
+          </ul>
+          
+          <!-- photos -->
+          <h2>Photos</h2>
+          <div class="photo-gallery">
+            {% for photo in details.photos %}
+            <img src="{{ photo }}" alt="Photo of {{ details.name }}" />
+            {% endfor %}
+          </div>
+          <br>
+          <!-- nearby locations -->
+          <h2>Nearby Locations</h2>
+          <ul>
+            {% for location in details.nearby_locations %}
+            <li>{{ location.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Footer-->
+    <footer>
+      <div class="small text-center text-muted fst-italic">
+        Copyright &copy; Siyuan Ma 2023
+      </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{{ url_for('static', filename='scripts/scripts.js') }}"></script>
+  </body>
+</html>
