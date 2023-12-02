@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 from trip_helper import location_search, combined_location_info
 
 app = Flask(__name__)
