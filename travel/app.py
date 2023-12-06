@@ -23,10 +23,6 @@ def location_list():
 @app.route('/location_details/<location_id>')
 def location_details(location_id):
     combined_info = combined_location_info(location_id, category=None)
-
-    if combined_info == "No details found for the given location ID.":
-        return render_template('no_details.html')
-
     return render_template('location_details.html', details=combined_info)
 
 
